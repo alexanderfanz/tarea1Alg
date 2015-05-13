@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "suffixtrie.h"
+#include "suffixtrie/suffixtrie.h"
 
 int main()
 {
