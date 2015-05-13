@@ -3,8 +3,11 @@
 
 int main()
 {
-	Suffix_Trie st;
+	char cad[] = {'a', 'b', 'a', 'a', 'b', 'a', '$', '\0'};
 	
-	printf("Hello world!!!\n");
+	Suffix_Trie st(cad);
+
+	st.print();
+	
 	return 0;
 }

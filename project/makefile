@@ -17,7 +17,7 @@ node.o: suffixtrie/node.cpp suffixtrie/node.h
 	$(CC) $(CFLAGS) suffixtrie/node.cpp
 	
 clean:
-	rm *o project
+	rm *o project1
 	
 #all: hello
 
