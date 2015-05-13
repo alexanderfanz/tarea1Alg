@@ -5,6 +5,6 @@ int main()
 {
 	Suffix_Trie st;
 	
-	printf("%d hello world!!!\n", st.get());
+	printf("Hello world!!!\n");
 	return 0;
 }

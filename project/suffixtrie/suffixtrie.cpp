@@ -1,5 +1,9 @@
 #include "suffixtrie.h"
 
-int Suffix_Trie::get(){
-	return 100;
+Suffix_Trie::Suffix_Trie(){
+	root = new Node();
+}
+
+Suffix_Trie::~Suffix_Trie(){
+	delete root;
 }

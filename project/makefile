@@ -4,14 +4,18 @@ CFLAGS=-c -Wall
 
 all: project
 	
-project: main.o suffixtrie.o
-	$(CC) main.o suffixtrie.o -o project
+project: main.o suffixtrie.o node.o
+	$(CC) main.o suffixtrie.o node.o -o project1
 	
 main.o: main.cpp
 	$(CC) $(CFLAGS) main.cpp
 	
-suffixtrie.o: suffixtrie.cpp suffixtrie.h
-	$(CC) $(CFLAGS) suffixtrie.cpp
+suffixtrie.o: suffixtrie/suffixtrie.cpp suffixtrie/suffixtrie.h node.o
+	$(CC) $(CFLAGS) suffixtrie/suffixtrie.cpp
+	
+node.o: suffixtrie/node.cpp suffixtrie/node.h
+	$(CC) $(CFLAGS) suffixtrie/node.cpp
+	
 clean:
 	rm *o project
 	
