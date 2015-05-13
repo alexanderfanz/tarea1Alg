@@ -8,6 +8,7 @@ class Suffix_Trie {
 		int get();
 		
 	private:
+	 	void test(){}
 };
  
 #endif
