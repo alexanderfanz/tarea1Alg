@@ -38,3 +38,11 @@ R_Value Node::insert_c(char c) {
 	children.insert(pair<char, R_Value>(c, rvalue));
 	return rvalue;
 }
+
+int Node::get_pos() {
+	return pos;
+}
+
+void Node::set_pos(int p) {
+	pos = p;
+}

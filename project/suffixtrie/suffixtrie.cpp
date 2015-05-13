@@ -34,6 +34,12 @@ Suffix_Trie::Suffix_Trie(char* cad){
 		
 		prev_ptr->set_suffix_link(root);
 	}
+	
+	int pos = 0;
+	while (first) {
+		first->set_pos(pos++);
+		first = first->get_suffix_link();	
+	}
 }
 
 Suffix_Trie::~Suffix_Trie(){
@@ -50,7 +56,7 @@ void Suffix_Trie::print(Node* ptr, char* cad, int pos)
 {
 	if (ptr->children.size() == 0) {
 		cad[pos] = '\0';
-		printf("%s\n", cad);
+		printf("%s %d\n", cad, ptr->get_pos());
 	}
 	else {
 		for (map<char, R_Value>::iterator it = ptr->children.begin(); it != ptr->children.end(); it++) {
