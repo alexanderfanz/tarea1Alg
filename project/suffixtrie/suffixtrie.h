@@ -6,6 +6,8 @@ class Suffix_Trie {
 	public:
 		Suffix_Trie(){}
 		int get();
+		
+	private:
 };
  
 #endif
