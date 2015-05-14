@@ -16,8 +16,9 @@ class Suffix_Trie {
 				
 	private:
 	 	Node* root;
+		void compress_trie();
 		 
-		 void print(Node* ptr, char* cad, int pos);
+		void print(Node* ptr, char* cad, int pos);
 };
  
 #endif

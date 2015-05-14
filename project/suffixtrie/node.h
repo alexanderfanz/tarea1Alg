@@ -25,10 +25,12 @@ class Node {
 		R_Value insert_c(char c);
 		int get_pos();
 		void set_pos(int p);
+		int get_number_of_children();
 };
 
 struct R_Value {
 	Node* node;
+	char* cad;
 };
 
 #endif

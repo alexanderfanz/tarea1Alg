@@ -34,6 +34,8 @@ R_Value Node::insert_c(char c) {
 		return it->second;
 	R_Value rvalue;
 	rvalue.node = new Node();
+	rvalue.cad = new char[1];
+	rvalue.cad[0] = '\0';
 	
 	children.insert(pair<char, R_Value>(c, rvalue));
 	return rvalue;
@@ -45,4 +47,8 @@ int Node::get_pos() {
 
 void Node::set_pos(int p) {
 	pos = p;
+}
+
+int Node::get_number_of_children() {
+	return children.size();
 }
