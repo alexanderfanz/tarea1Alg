@@ -2,6 +2,7 @@
 
 Node::Node(){
 	suffix_link = 0;
+	pos = -1;
 }
 
 Node::~Node(){

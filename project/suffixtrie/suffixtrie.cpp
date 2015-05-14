@@ -82,7 +82,6 @@ void Suffix_Trie::compress_trie() {
 		Node* node = st.top();
 		st.pop();
 		
-		printf("Ok\n");
 		for (map<char, R_Value>::iterator it = node->children.begin(); it != node->children.end(); it++) {
 			
 			while (it->second.node->get_number_of_children() == 1) {
@@ -100,4 +99,69 @@ void Suffix_Trie::compress_trie() {
 			st.push(it->second.node);
 		} 
 	}
+}
+
+list<int> Suffix_Trie::find_occ(char* pattern) {
+	
+	list<int> result;
+	
+	Node* ptr;
+	
+	if ((ptr = find_pattern(pattern))) {
+		return pos_of_leaves(ptr);
+	}
+	else {
+		return result;	
+	}
+}
+
+Node* Suffix_Trie::find_pattern(char* pattern) {
+	
+	Node* ptr = root;
+	int pos = 0;
+	int len = strlen(pattern);
+	
+	while (pos < len) {
+		map<char, R_Value>::iterator it = ptr->children.find(pattern[pos++]);
+		
+		if (it == ptr->children.end())
+			return 0;  
+		int i = 0;
+		bool flag = true;
+		
+		while (pattern[pos] != '\0' && it->second.cad[i] != '\0' && flag) {
+			flag = pattern[pos++] == it->second.cad[i++]; 
+		}
+		
+		if (!flag)
+			return 0;
+		ptr = it->second.node;
+	}
+	
+	return ptr;
+}
+
+list<int> Suffix_Trie::pos_of_leaves(Node* node) {
+	
+	stack<Node*> st;
+	st.push(node);
+	
+	list<int> result;
+	
+	Node* ptr;
+	
+	while (!st.empty()) {
+		
+		ptr = st.top();
+		st.pop();
+			
+		if (ptr->get_pos() != -1) 
+			result.push_back(ptr->get_pos());
+			
+		for (map<char, R_Value>::iterator it = ptr->children.begin(); it != ptr->children.end(); it++) {
+			st.push(it->second.node);
+		}
+	}
+	
+	return result;
 }
