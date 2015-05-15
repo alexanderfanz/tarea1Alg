@@ -1,5 +1,5 @@
-#ifndef NODE_H_
-#define NODE_H_
+#ifndef NODEPT_H_
+#define NODEPT_H_
 
 #include <map>
 
@@ -7,20 +7,20 @@ using namespace std;
 
 struct R_Value;
 
-class Node {
+class Node_PT {
 	
 	private:
 		map<char, R_Value> children;
-		Node* suffix_link;
+		Node_PT* suffix_link;
 		int pos;
 		
 		friend class Suffix_Trie; // delete this
 		
 	public:
-		Node();
-		~Node();
-		Node* get_suffix_link();
-		void set_suffix_link(Node* sl);
+		Node_PT();
+		~Node_PT();
+		Node_PT* get_suffix_link();
+		void set_suffix_link(Node_PT* sl);
 		bool is_c(char c, R_Value& result);
 		R_Value insert_c(char c);
 		int get_pos();
@@ -29,7 +29,7 @@ class Node {
 };
 
 struct R_Value {
-	Node* node;
+	Node_PT* node;
 	char* cad;
 };
 
