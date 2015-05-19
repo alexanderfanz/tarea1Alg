@@ -66,6 +66,39 @@ void Patrician_Trie::insert_string(char* cad, int real_pos) {
 			}
 			else {
 				
+				i--;
+				
+				char* new_cad = new char[i + 1];
+				
+				for (int j = 0; j < i; j++)
+					new_cad[j] = it->second.cad[j];
+				new_cad[i] = '\0';
+				
+				Node_PT* new_node = new Node_PT();
+				R_Value rvalue;
+				rvalue.node = it->second.node;
+				int len_rvalue_cad = strlen(it->second.cad) - i;
+				rvalue.cad = new char[len_rvalue_cad];
+				
+				for (int j = 0; it->second.cad[i + j + 1] != '\0'; j++)
+					rvalue.cad[j] = it->second.cad[i + j + 1];
+				rvalue.cad[len_rvalue_cad] = '\0';
+				
+				new_node->children.insert(pair<char, R_Value>(it->second.cad[i], rvalue));
+				
+				delete it->second.cad;
+				it->second.cad = new_cad;
+				it->second.node = new_node;
+				
+				pos--;
+				R_Value rvalue2;
+				rvalue2.cad = new char[len - pos];
+				for (int j = 0; j < len - pos - 1; j++)
+					rvalue2.cad[j] = cad[pos + j + 1];
+				rvalue2.cad[len - pos - 1] = '\0';
+				ptr = rvalue2.node = new Node_PT();
+				
+				new_node->children.insert(pair<char, R_Value>(cad[pos], rvalue2));
 			}
 		}
 	}

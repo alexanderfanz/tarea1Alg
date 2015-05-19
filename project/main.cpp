@@ -26,6 +26,7 @@ void test_patriciantrie() {
 	pt.insert_string("aabbaa", 1);
 	pt.insert_string("aabb", 2);
 	pt.insert_string("aabbcc", 4);
+	pt.insert_string("aaccaa", 6);
 	
 	pt.print();	
 }
