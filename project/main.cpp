@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include "suffixtrie/suffixtrie.h"
+#include "patriciantrie/patriciantrie.h"
 
-int main()
-{
+
+void test_suffixtrie() {
 	char cad[] = {'a', 'b', 'a', 'a', 'b', 'a', '$', '\0'};
 	
 	Suffix_Trie st(cad);
@@ -16,5 +17,22 @@ int main()
 	r.sort();
 	for (list<int>::iterator it = r.begin(); it != r.end(); it++)
 		printf("%d\n", *it);
+}
+
+void test_patriciantrie() {
+	
+	Patrician_Trie pt;
+	
+	pt.insert_string("aabbaa", 1);
+	pt.insert_string("aabb", 2);
+	pt.insert_string("aabbcc", 4);
+	
+	pt.print();	
+}
+
+int main()
+{
+	test_patriciantrie();
+	
 	return 0;
 }

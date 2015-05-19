@@ -1,21 +1,18 @@
 #include "nodept.h"
 
+using namespace ns_patrician_trie;
+
+
 Node_PT::Node_PT(){
-	suffix_link = 0;
-	pos = -1;
+	
 }
 
 Node_PT::~Node_PT(){
-	if (!suffix_link)
-		delete suffix_link;
+
 }
 
-Node_PT* Node_PT::get_suffix_link() {
-	return suffix_link;
-}
-
-void Node_PT::set_suffix_link(Node_PT* sl) {
-	suffix_link = sl;
+void Node_PT::add_position(int pos) {
+	positions.push_back(pos);
 }
 
 bool Node_PT::is_c(char c, R_Value& result) {
@@ -42,13 +39,6 @@ R_Value Node_PT::insert_c(char c) {
 	return rvalue;
 }
 
-int Node_PT::get_pos() {
-	return pos;
-}
-
-void Node_PT::set_pos(int p) {
-	pos = p;
-}
 
 int Node_PT::get_number_of_children() {
 	return children.size();
