@@ -4,6 +4,7 @@
 #include "nodept.h"
 #include <string.h>
 #include <stdio.h>
+#include <stack>
 
 using namespace ns_patrician_trie;
 
@@ -13,6 +14,8 @@ class Patrician_Trie {
 		Patrician_Trie();
 		void insert_string(char* cad, int real_pos);
 		void print();
+		list<int> find_occ(char* pattern);
+		list<int> find_whole_occ(char* pattern);
 		
 	private:
 		Node_PT* root;

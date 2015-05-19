@@ -26,14 +26,27 @@ void test_patriciantrie() {
 	pt.insert_string("aabbaa", 1);
 	pt.insert_string("aabb", 2);
 	pt.insert_string("aabbcc", 4);
+	pt.insert_string("aabbca", 10);
 	pt.insert_string("aaccaa", 6);
+	pt.insert_string("aabbcc", 8);
+	pt.insert_string("aabb", 7);
+	pt.insert_string("aabbcc", 9);
+	
 	
 	pt.print();	
+	
+	printf("--------------\n");
+	
+	list<int> r = pt.find_occ("aabbc");
+	for (list<int>::iterator it = r.begin(); it != r.end(); it++)
+		printf("%d\n", *it);
 }
 
 int main()
 {
 	test_patriciantrie();
+	
+	
 	
 	return 0;
 }

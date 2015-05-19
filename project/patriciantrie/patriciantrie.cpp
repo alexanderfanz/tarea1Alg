@@ -165,3 +165,75 @@ void Patrician_Trie::print(Node_PT* ptr, char* cad, int pos)
 	
 		
 }
+
+list<int> Patrician_Trie::find_occ(char* pattern) {
+	
+	Node_PT* ptr;
+	
+	int pos = match_pattern(pattern, ptr);
+	int len = strlen(pattern);
+	
+	list<int> result;
+		
+	if (pos < len) {
+		
+		map<char, R_Value>::iterator it = ptr->children.find(pattern[pos]);
+		
+		if (it == ptr->children.end()) {
+			return result;
+		}
+		else {
+			
+			pos++;
+			
+			int i = 0;
+			bool flag = true;
+			
+			while (pattern[pos] != '\0' && it->second.cad[i] != '\0' && flag) {
+				flag = pattern[pos++] == it->second.cad[i++]; 
+			}
+			
+			
+			if (flag) {
+				
+				ptr = it->second.node;
+			}
+			else {
+				
+				return result;
+			}
+		}
+	}
+	
+	
+	stack<Node_PT*>* st = new stack<Node_PT*>();
+	
+	st->push(ptr);
+	
+	while (!st->empty()) 
+	{
+		
+		ptr = st->top();
+		st->pop();
+		list<int> tmp = ptr->get_positions();
+		
+		result.insert(result.end(), tmp.begin(), tmp.end());
+		
+		for (map<char, R_Value>::iterator it = ptr->children.begin(); it != ptr->children.end(); it++)
+			st->push(it->second.node);
+	}
+	
+	return result;
+}
+
+list<int> Patrician_Trie::find_whole_occ(char* pattern) {
+	Node_PT* ptr;
+	
+	if (match_pattern(pattern, ptr) < strlen(pattern))
+	{
+		list<int> r;
+		return r;
+	} 
+	else 
+		return ptr->get_positions();
+}

@@ -24,6 +24,7 @@ class Node_PT {
 		bool is_c(char c, R_Value& result);
 		R_Value insert_c(char c);
 		int get_number_of_children();
+		list<int> get_positions();
 };
 
 struct R_Value {

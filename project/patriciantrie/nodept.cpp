@@ -43,3 +43,7 @@ R_Value Node_PT::insert_c(char c) {
 int Node_PT::get_number_of_children() {
 	return children.size();
 }
+
+list<int> Node_PT::get_positions() {
+	return positions;
+}
