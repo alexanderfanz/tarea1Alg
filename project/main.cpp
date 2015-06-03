@@ -44,9 +44,29 @@ void test_patriciantrie() {
 
 int main()
 {
-	test_patriciantrie();
+	//test_patriciantrie();
 	
+	bool sieve[1000000];
 	
+	for (int i = 0; i < 1000000; i++)
+		sieve[i] = true;
+	
+	int j = 0;		
+	for (int i = 2; i < 500000; i++){
+		if (sieve[i]) {
+			printf("%d %d\n", i, j + 1);
+			if (++j == 1206) {
+				printf("%d\n", i);
+				break;
+			}
+			int k = i * 2;
+			
+			while (k < 1000000) {
+				sieve[k] = false;
+				k += i;
+			}
+		}
+	}
 	
 	return 0;
 }

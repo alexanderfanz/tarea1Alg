@@ -4,8 +4,8 @@ CFLAGS=-c -Wall
 
 all: project
 	
-project: main.o suffixtrie.o nodeST.o patriciantrie.o nodePT.o
-	$(CC) main.o suffixtrie.o nodeST.o patriciantrie.o nodePT.o -o project1
+project: main.o suffixtrie.o nodeST.o patriciantrie.o nodePT.o automata.o tfunct.o
+	$(CC) main.o suffixtrie.o nodeST.o patriciantrie.o nodePT.o automata.o tfunct.o -o project1
 	
 main.o: main.cpp
 	$(CC) $(CFLAGS) main.cpp
@@ -21,6 +21,13 @@ patriciantrie.o: patriciantrie/patriciantrie.cpp patriciantrie/patriciantrie.h n
 	
 nodePT.o: patriciantrie/nodept.cpp patriciantrie/nodept.h
 	$(CC) $(CFLAGS) patriciantrie/nodept.cpp -o nodePT.o
+	
+automata.o: automata/automata.cpp automata/automata.h tfunct.o 
+	$(CC) $(CFLAGS) automata/automata.cpp -o automata.o
+	
+tfunct.o: automata/transitionfunct.cpp automata/transitionfunct.h 
+	$(CC) $(CFLAGS) automata/transitionfunct.cpp -o tfunct.o
+
  
 clean:
 	rm *o project1
