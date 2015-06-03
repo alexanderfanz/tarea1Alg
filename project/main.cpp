@@ -1,17 +1,18 @@
 #include <stdio.h>
 #include "suffixtrie/suffixtrie.h"
 #include "patriciantrie/patriciantrie.h"
+#include "automata/automata.h"
 
 
 void test_suffixtrie() {
-	char cad[] = {'a', 'b', 'a', 'a', 'b', 'a', '$', '\0'};
+	char cad[] = {'a', 'a', ' ', 'a', ' ', 'a', '$', '\0'};
 	
 	Suffix_Trie st(cad);
 
 	st.print();
 	
-	char cad2[] = {'a', 'b', 'a', '\0'};
-	list<int> r = st.find_occ("a");
+	char cad2[] = {'a', ' ', 'a', '\0'};
+	list<int> r = st.find_occ(cad2);
 	
 	printf("%s\n%s\n", cad, cad2);
 	r.sort();
@@ -42,31 +43,25 @@ void test_patriciantrie() {
 		printf("%d\n", *it);
 }
 
+void test_automata() {
+	
+	Automata *a = new Automata("bcaabc");
+	
+	
+	list<int> r = a->get_occ("abcaabcaabcaabcaa");
+	for (list<int>::iterator it = r.begin(); it != r.end(); it++)
+		printf("%d\n", *it);
+	
+	
+}
+
 int main()
 {
+	//test_suffixtrie();
+	
 	//test_patriciantrie();
 	
-	bool sieve[1000000];
-	
-	for (int i = 0; i < 1000000; i++)
-		sieve[i] = true;
-	
-	int j = 0;		
-	for (int i = 2; i < 500000; i++){
-		if (sieve[i]) {
-			printf("%d %d\n", i, j + 1);
-			if (++j == 1206) {
-				printf("%d\n", i);
-				break;
-			}
-			int k = i * 2;
-			
-			while (k < 1000000) {
-				sieve[k] = false;
-				k += i;
-			}
-		}
-	}
+	test_automata();
 	
 	return 0;
 }

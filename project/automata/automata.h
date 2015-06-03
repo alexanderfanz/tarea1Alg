@@ -2,6 +2,8 @@
 #define AUTOMATA_H_
 
 #include <list>
+#include "transitionfunct.h"
+
 
 class Automata {
 	
@@ -11,7 +13,8 @@ class Automata {
 		std::list<int> get_occ(char* text);
 		
 	private:
-		int m;		
+		int m;	
+		TransitionFunction *tf;
 };
 
 

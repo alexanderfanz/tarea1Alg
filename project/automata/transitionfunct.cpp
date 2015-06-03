@@ -1,5 +1,7 @@
 #include "transitionfunct.h"
 
+#include <stdio.h>
+
 TransitionFunction::TransitionFunction(char* cad) {
 	
 	m = strlen(cad);
@@ -15,7 +17,9 @@ TransitionFunction::TransitionFunction(char* cad) {
 	}
 	
 	for (int q = 0; q < m + 1; q++){
-		for (char c = 0; c < 256; c++){
+		
+		for (unsigned char c = 0; c < 255; c++){
+			
 			
 		    if (q < m && c == cad[q])
 		        f[q][c] = q + 1;
