@@ -28,9 +28,11 @@ automata.o: automata/automata.cpp automata/automata.h tfunct.o
 tfunct.o: automata/transitionfunct.cpp automata/transitionfunct.h 
 	$(CC) $(CFLAGS) automata/transitionfunct.cpp -o tfunct.o
 
+filter: filter.cpp
+	$(CC) filter.cpp -o filter
  
 clean:
-	rm *o project1
+	rm *o project1 filter
 	
 #all: hello
 
