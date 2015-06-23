@@ -31,6 +31,9 @@ tfunct.o: automata/transitionfunct.cpp automata/transitionfunct.h
 filter: filter.cpp
 	$(CC) filter.cpp -o filter
  
+extractquery: extractquery.cpp
+	$(CC) extractquery.cpp -o extractquery
+
 clean:
 	rm *o project1 filter
 	
