@@ -63,7 +63,7 @@ void Suffix_Trie::print(Node* ptr, char* cad, int pos)
 		printf("%s %d\n", cad, ptr->get_pos());
 	}
 	else {
-		for (map<char, R_Value>::iterator it = ptr->children.begin(); it != ptr->children.end(); it++) {
+		for (unordered_map<char, R_Value>::iterator it = ptr->children.begin(); it != ptr->children.end(); it++) {
 			cad[pos] = it->first;
 			int new_pos = pos + 1;
 			for (int i = 0; i < strlen(it->second.cad); i++) 
@@ -83,7 +83,7 @@ void Suffix_Trie::compress_trie() {
 		Node* node = st.top();
 		st.pop();
 		
-		for (map<char, R_Value>::iterator it = node->children.begin(); it != node->children.end(); it++) {
+		for (unordered_map<char, R_Value>::iterator it = node->children.begin(); it != node->children.end(); it++) {
 			
 			while (it->second.node->get_number_of_children() == 1) {
 				Node* tmp = it->second.node;
@@ -123,7 +123,7 @@ Node* Suffix_Trie::find_pattern(char* pattern) {
 	int len = strlen(pattern);
 	
 	while (pos < len) {
-		map<char, R_Value>::iterator it = ptr->children.find(pattern[pos++]);
+		unordered_map<char, R_Value>::iterator it = ptr->children.find(pattern[pos++]);
 		
 		if (it == ptr->children.end())
 			return 0;  
@@ -159,7 +159,7 @@ list<int> Suffix_Trie::pos_of_leaves(Node* node) {
 		if (ptr->get_pos() != -1) 
 			result.push_back(ptr->get_pos());
 			
-		for (map<char, R_Value>::iterator it = ptr->children.begin(); it != ptr->children.end(); it++) {
+		for (unordered_map<char, R_Value>::iterator it = ptr->children.begin(); it != ptr->children.end(); it++) {
 			st.push(it->second.node);
 		}
 	}

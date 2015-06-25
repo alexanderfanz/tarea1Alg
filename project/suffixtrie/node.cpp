@@ -20,7 +20,7 @@ void Node::set_suffix_link(Node* sl) {
 
 bool Node::is_c(char c, R_Value& result) {
 	
-	map<char, R_Value>::iterator it = children.find(c); 
+	unordered_map<char, R_Value>::iterator it = children.find(c); 
 	
 	if (it != children.end()) 
 		result = it->second;
@@ -29,7 +29,7 @@ bool Node::is_c(char c, R_Value& result) {
 
 R_Value Node::insert_c(char c) {
 	
-	map<char, R_Value>::iterator it = children.find(c); 
+	unordered_map<char, R_Value>::iterator it = children.find(c); 
 	
 	if (it != children.end()) 
 		return it->second;

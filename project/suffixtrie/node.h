@@ -1,16 +1,21 @@
 #ifndef NODE_H_
 #define NODE_H_
 
-#include <map>
+#include <unordered_map>
 
 using namespace std;
 
-struct R_Value;
+class Node;
+
+struct R_Value {
+	Node* node;
+	char* cad;
+};
 
 class Node {
 	
 	private:
-		map<char, R_Value> children;
+		unordered_map<char, R_Value> children;
 		Node* suffix_link;
 		int pos;
 		
@@ -28,9 +33,6 @@ class Node {
 		int get_number_of_children();
 };
 
-struct R_Value {
-	Node* node;
-	char* cad;
-};
+
 
 #endif
