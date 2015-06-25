@@ -1,5 +1,6 @@
 #include "suffixtrie.h"
 #include <stack>
+#include <stdio.h>
 
 Suffix_Trie::Suffix_Trie(){
 	root = new Node();
@@ -10,12 +11,12 @@ Suffix_Trie::Suffix_Trie(char* cad){
 	
 	int len = strlen(cad);
 	
-	Node* ptr;
+	Node* ptr; 
 	Node* prev_ptr;
 	Node* first = root;
 	
 	for (int i = 0; i < len; i++) {
-		
+		printf("%d\n", i);
 		ptr = first;
 		
 		first = first->insert_c(cad[i]).node;
