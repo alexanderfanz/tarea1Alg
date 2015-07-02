@@ -7,6 +7,11 @@ Automata::Automata(char* pattern) {
 	tf = new TransitionFunction(pattern);	
 }
 
+Automata::~Automata() {
+	
+	delete tf;	
+}
+
 std::list<int> Automata::get_occ(char* text) {
 	
 	int state = 0;

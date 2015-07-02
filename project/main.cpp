@@ -58,25 +58,84 @@ void test_automata() {
 }
 
 
-clock_t begin;
-clock_t end;
+clock_t _begin;
+clock_t _end;
 	
 	
 void run_experiment_suffix(FILE *out_res, char *data, list<char*> *queries){
 	
-	begin = clock();
-	Suffix_Trie *st = new Suffix_Trie(data);
-	end = clock();
-	fprintf(out_res, "%.3f,", double(end - begin) / (CLOCKS_PER_SEC / double(1)));
-}
-
-void run_experiment_automata(){
+	_begin = clock();
+	//Suffix_Trie *st = new Suffix_Trie(data);
+	_end = clock();
+	fprintf(out_res, "%.3f,", double(_end - _begin) / (CLOCKS_PER_SEC / double(1)));
+	fprintf(out_res, "%.3f,", double(_end - _begin) / (CLOCKS_PER_SEC / double(1)));
 	
 }
 
-
-void run_experiment_patrician(){
+void run_experiment_automata(FILE *out_res, char *data, list<char*> *queries){
 	
+	int count = 0;
+	
+	fprintf(out_res, "%.3f,", 0);
+	Automata *a;
+	_begin = clock();
+	
+	for (std::list<char*>::iterator it = queries->begin(); it != queries->end(); it++, count++){
+		if (count % 1000 == 0) printf("%d\n", count);
+		
+		 a = new Automata(*it);
+	
+	
+		list<int> r = a->get_occ(data);
+		
+		delete a;
+	}
+		
+	_end = clock();
+	fprintf(out_res, "%.3f,", double(_end - _begin) / (CLOCKS_PER_SEC / double(1)));
+	 
+}
+
+
+void run_experiment_patrician(FILE *out_res, char *data, list<char*> *queries){
+	int count = 0;
+	
+	_begin = clock();
+	
+	Patrician_Trie *pt = new Patrician_Trie();
+	int len = strlen(data);
+	int i = 0;
+	char cad[1000];
+	int cc;
+	
+	printf("filling the patrician trie....\n");
+	while (data[i] == ' ') i++;
+	while (i < len){
+		cc = 0;
+		while (data[i] >= 'a' && data[i] <= 'z') cad[cc++] = data[i++];
+		cad[cc] = '\0';
+		pt->insert_string(cad, i - cc);
+		while (data[i] == ' ') i++;
+		
+		if (i % 7 == 0) printf("%d\n", i);
+	}
+	
+	_end = clock();
+	fprintf(out_res, "%.3f,", double(_end - _begin) / CLOCKS_PER_SEC);
+	
+	_begin = clock();
+	printf("consulting the patrician trie....\n");
+	
+	for (std::list<char*>::iterator it = queries->begin(); it != queries->end(); it++, count++){
+		if (count % 1000 == 0) printf("%d\n", count);
+		
+		pt->find_occ(*it); 
+	}
+		
+	_end = clock();
+	fprintf(out_res, "%.3f\n", double(_end - _begin) / CLOCKS_PER_SEC);
+	
+	delete pt;
 }
 
 void run_experiment() {
@@ -94,12 +153,13 @@ void run_experiment() {
 	fprintf(out_res, "-,SuffixTrie,-,Automata,-,PatricianTrie,-\n");
 	fprintf(out_res, "Test No,Build,Consult,Build,Consult,Build,Consult\n");
 	
-	for (int i = 0; i < 1; i++){
-		begin = clock();
+	for (int i = 0; i < 5; i++){
+		_begin = clock();
 		input = fopen(filename, "rt");
 		fgets(data, MAX_CHARS, input);
 		fclose(input);
 		
+		queries->clear();
 		input = fopen(filename_query, "rt");
 		while(fscanf(input, "%s\n", cad) != EOF) {
 			cad_tmp = new char(strlen(cad) + 1);
@@ -107,25 +167,19 @@ void run_experiment() {
 			queries->push_back(cad_tmp);	
 		}
 		fclose(input);
-		end = clock();
-		printf("reading...  %.3f,", double(end - begin) / (CLOCKS_PER_SEC / double(1)));
+		_end = clock();
+		printf("reading...  %.3f\n", double(_end - _begin) / (CLOCKS_PER_SEC / double(1)));
 		fprintf(out_res, "%s,", filename);
 		
-		begin = clock();
 		run_experiment_suffix(out_res, data, queries);
-		end = clock();
-		printf("%.3f,", double(end - begin) / (CLOCKS_PER_SEC / double(1)));
 		
-		begin = clock();
-		run_experiment_automata();
-		end = clock();
-		printf("%.3f,", double(end - begin) / (CLOCKS_PER_SEC / double(100)));
+		run_experiment_automata(out_res, data, queries);
 		
-		begin = clock();
-		run_experiment_patrician();
-		end = clock();
-		printf("%.3f,", double(end - begin) / (CLOCKS_PER_SEC / double(100)));
+		run_experiment_patrician(out_res, data, queries);
 		
+		
+		filename[18]++;
+		filename_query[19]++;
 		
 	}
 	
@@ -133,6 +187,18 @@ void run_experiment() {
 	fclose(out_res);	
 }
 
+void testtest(){
+	
+	_begin = clock();
+	for (int i = 0; i < 1000000000; i++){
+		
+		//if (i % 1000 == 0) printf("%d\n", i/1000);
+		int a = 10;
+		int b = a * 77;
+	}
+	_end = clock();
+	printf("%.3f,", double(_end - _begin) / (CLOCKS_PER_SEC));
+}
 
 int main()
 {
@@ -143,6 +209,9 @@ int main()
 	//test_automata();
 
 	run_experiment();
+	
+	//testtest();
+	
 		
 	return 0;
 }

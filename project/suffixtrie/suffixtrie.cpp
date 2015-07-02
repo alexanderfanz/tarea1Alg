@@ -16,7 +16,8 @@ Suffix_Trie::Suffix_Trie(char* cad){
 	Node* first = root;
 	
 	for (int i = 0; i < len; i++) {
-		printf("%d\n", i);
+		if (i % 100 == 0)
+			printf("%d\n", i);
 		ptr = first;
 		
 		first = first->insert_c(cad[i]).node;
