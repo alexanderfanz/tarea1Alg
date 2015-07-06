@@ -1,5 +1,5 @@
 #include "node.h"
-
+int Node::number_of_nodes = 0;
 Node::Node(){
 	suffix_link = 0;
 	pos = -1;
@@ -37,6 +37,9 @@ R_Value Node::insert_c(char c) {
 	rvalue.node = new Node();
 	rvalue.cad = new char[1];
 	rvalue.cad[0] = '\0';
+	
+	if (number_of_nodes++ % 1 == 0) printf("Node   ---->   %d\n", number_of_nodes);
+	
 	
 	children.insert(pair<char, R_Value>(c, rvalue));
 	return rvalue;

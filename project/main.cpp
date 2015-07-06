@@ -4,6 +4,7 @@
 #include "suffixtrie/suffixtrie.h"
 #include "patriciantrie/patriciantrie.h"
 #include "automata/automata.h"
+#include "suffixtrie2/suffix2.h"
 
 
 void test_suffixtrie() {
@@ -21,6 +22,24 @@ void test_suffixtrie() {
 	for (list<int>::iterator it = r.begin(); it != r.end(); it++)
 		printf("%d\n", *it);
 }
+
+
+void test_suffix2() {
+	char cad[] = "mississippi";
+	//char cad[] = "aab";
+	
+	ns_suffix2::Suffix2 st(cad);
+
+	st.print();
+	
+	
+}
+
+
+void test2_suffixtrie() {
+	Suffix_Trie st("ababababab$");
+}
+
 
 void test_patriciantrie() {
 	
@@ -65,7 +84,7 @@ clock_t _end;
 void run_experiment_suffix(FILE *out_res, char *data, list<char*> *queries){
 	
 	_begin = clock();
-	//Suffix_Trie *st = new Suffix_Trie(data);
+	Suffix_Trie *st = new Suffix_Trie(data);
 	_end = clock();
 	fprintf(out_res, "%.3f,", double(_end - _begin) / (CLOCKS_PER_SEC / double(1)));
 	fprintf(out_res, "%.3f,", double(_end - _begin) / (CLOCKS_PER_SEC / double(1)));
@@ -96,6 +115,41 @@ void run_experiment_automata(FILE *out_res, char *data, list<char*> *queries){
 	 
 }
 
+void run_experiment_suffix2(FILE *out_res, char *data, list<char*> *queries){
+	int count = 0;
+	
+	_begin = clock();
+	
+	Patrician_Trie *pt = new Patrician_Trie();
+	int len = strlen(data);
+	int i = 0;
+	char cad[1000];
+	int cc;
+	
+	printf("filling the suffix2 ....\n");
+	
+	for (int i = 0; i < len; i++){
+		pt->insert_string(cad + i, i);
+		printf("%d\n", i);
+	}
+	
+	_end = clock();
+	fprintf(out_res, "%.3f,", double(_end - _begin) / CLOCKS_PER_SEC);
+	
+	_begin = clock();
+	printf("consulting the patrician trie....\n");
+	
+	for (std::list<char*>::iterator it = queries->begin(); it != queries->end(); it++, count++){
+		if (count % 1000 == 0) printf("%d\n", count);
+		
+		pt->find_occ(*it); 
+	}
+		
+	_end = clock();
+	fprintf(out_res, "%.3f\n", double(_end - _begin) / CLOCKS_PER_SEC);
+	
+	delete pt;
+}
 
 void run_experiment_patrician(FILE *out_res, char *data, list<char*> *queries){
 	int count = 0;
@@ -138,9 +192,10 @@ void run_experiment_patrician(FILE *out_res, char *data, list<char*> *queries){
 	delete pt;
 }
 
+
 void run_experiment() {
 	
-	FILE *out_res = fopen("results.csv", "wt");
+	FILE *out_res = fopen("./results/results.csv", "wt");
 	FILE *input;
 	char filename[] = "../books/data/data0.in";
 	char filename_query[] = "../books/data/query0.in";
@@ -152,6 +207,8 @@ void run_experiment() {
 	
 	fprintf(out_res, "-,SuffixTrie,-,Automata,-,PatricianTrie,-\n");
 	fprintf(out_res, "Test No,Build,Consult,Build,Consult,Build,Consult\n");
+	
+	
 	
 	for (int i = 0; i < 5; i++){
 		_begin = clock();
@@ -171,11 +228,12 @@ void run_experiment() {
 		printf("reading...  %.3f\n", double(_end - _begin) / (CLOCKS_PER_SEC / double(1)));
 		fprintf(out_res, "%s,", filename);
 		
-		run_experiment_suffix(out_res, data, queries);
+		//run_experiment_suffix(out_res, data, queries);
+		run_experiment_suffix2(out_res, data, queries);
 		
-		run_experiment_automata(out_res, data, queries);
+		//run_experiment_automata(out_res, data, queries);
 		
-		run_experiment_patrician(out_res, data, queries);
+		//run_experiment_patrician(out_res, data, queries);
 		
 		
 		filename[18]++;
@@ -203,15 +261,16 @@ void testtest(){
 int main()
 {
 	//test_suffixtrie();
+	//test2_suffixtrie();
 	
 	//test_patriciantrie();
 	
 	//test_automata();
 
-	run_experiment();
+	//run_experiment();
 	
 	//testtest();
 	
-		
+	test_suffix2();
 	return 0;
 }

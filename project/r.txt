@@ -1,0 +1,2 @@
+g++ -std=c++11 -c -Wall suffixtrie2/suffix2.cpp
+makefile:20: recipe for target 'suffix2.o' failed

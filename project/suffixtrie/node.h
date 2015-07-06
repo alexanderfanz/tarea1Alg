@@ -18,7 +18,7 @@ class Node {
 		unordered_map<char, R_Value> children;
 		Node* suffix_link;
 		int pos;
-		
+		 
 		friend class Suffix_Trie; // delete this
 		
 	public:
@@ -31,6 +31,10 @@ class Node {
 		int get_pos();
 		void set_pos(int p);
 		int get_number_of_children();
+		
+		
+		static int number_of_nodes;
+		//static void init(){number_of_nodes = 0;}
 };
 
 
