@@ -102,8 +102,9 @@ void run_experiment_automata(FILE *out_res, char *data, list<char*> *queries){
 	Automata *a;
 	_begin = clock();
 	
+	printf("automata...\n");
 	for (std::list<char*>::iterator it = queries->begin(); it != queries->end(); it++, count++){
-		if (count % 1000 == 0) printf("%d\n", count);
+		//if (count % 1000 == 0) printf("%d\n", count);
 		
 		 a = new Automata(*it);
 	
@@ -115,6 +116,7 @@ void run_experiment_automata(FILE *out_res, char *data, list<char*> *queries){
 		
 	_end = clock();
 	fprintf(out_res, "%.3f,", double(_end - _begin) / (CLOCKS_PER_SEC / double(1)));
+	fprintf(stdout, "%.3f\n", double(_end - _begin) / CLOCKS_PER_SEC);
 	 
 }
 
@@ -124,23 +126,27 @@ void run_experiment_suffix2(FILE *out_res, char *data, list<char*> *queries){
 	_begin = clock();
 	
 	printf("filling the suffix2 ....\n");
-	ns_suffix2::Suffix2 st(data);
+	ns_suffix2::Suffix2 *st = new ns_suffix2::Suffix2(data);
 	
 	_end = clock();
 	fprintf(out_res, "%.3f,", double(_end - _begin) / CLOCKS_PER_SEC);
+	fprintf(stdout, "%.3f\n", double(_end - _begin) / CLOCKS_PER_SEC);
 	
 	_begin = clock();
 	printf("consulting the suffix2....\n");
 	
-	/*for (std::list<char*>::iterator it = queries->begin(); it != queries->end(); it++, count++){
-		if (count % 1000 == 0) printf("%d\n", count);
+	for (std::list<char*>::iterator it = queries->begin(); it != queries->end(); it++, count++){
+		//if (count % 1000 == 0) printf("%d\n", count);
 		
-		pt->find_occ(*it); 
+		st->find_occ(*it); 
 	}
-		*/
+		
 	_end = clock();
 	fprintf(out_res, "%.3f\n", double(_end - _begin) / CLOCKS_PER_SEC);
+	fprintf(stdout, "%.3f\n", double(_end - _begin) / CLOCKS_PER_SEC);
 	
+	printf("deleting the suffix2....\n");
+	delete st;
 }
 
 void run_experiment_suffix__2(FILE *out_res, char *data, list<char*> *queries){
@@ -190,7 +196,7 @@ void run_experiment_patrician(FILE *out_res, char *data, list<char*> *queries){
 	char cad[1000];
 	int cc;
 	
-	printf("filling the patrician trie....\n");
+	printf("filling the patricia trie....\n");
 	while (data[i] == ' ') i++;
 	while (i < len){
 		cc = 0;
@@ -199,24 +205,26 @@ void run_experiment_patrician(FILE *out_res, char *data, list<char*> *queries){
 		pt->insert_string(cad, i - cc);
 		while (data[i] == ' ') i++;
 		
-		if (i % 7 == 0) printf("%d\n", i);
+		//if (i % 7 == 0) printf("%d\n", i);
 	}
 	
 	_end = clock();
 	fprintf(out_res, "%.3f,", double(_end - _begin) / CLOCKS_PER_SEC);
+	fprintf(stdout, "%.3f\n", double(_end - _begin) / CLOCKS_PER_SEC);
 	
 	_begin = clock();
-	printf("consulting the patrician trie....\n");
+	printf("consulting the patricia trie....\n");
 	
 	for (std::list<char*>::iterator it = queries->begin(); it != queries->end(); it++, count++){
-		if (count % 1000 == 0) printf("%d\n", count);
+		//if (count % 1000 == 0) printf("%d\n", count);
 		
 		pt->find_occ(*it); 
 	}
 		
 	_end = clock();
 	fprintf(out_res, "%.3f\n", double(_end - _begin) / CLOCKS_PER_SEC);
-	
+	fprintf(stdout, "%.3f\n", double(_end - _begin) / CLOCKS_PER_SEC);
+	printf("deleting the patricia trie....\n");
 	delete pt;
 }
 
@@ -253,15 +261,15 @@ void run_experiment() {
 		}
 		fclose(input);
 		_end = clock();
-		printf("reading...  %.3f\n", double(_end - _begin) / (CLOCKS_PER_SEC / double(1)));
+		printf("reading iteration %d...  %.3f\n", i, double(_end - _begin) / (CLOCKS_PER_SEC / double(1)));
 		fprintf(out_res, "%s,", filename);
 		
 		//run_experiment_suffix(out_res, data, queries);
 		run_experiment_suffix2(out_res, data, queries);
 		
-		//run_experiment_automata(out_res, data, queries);
+		run_experiment_automata(out_res, data, queries);
 		
-		//run_experiment_patrician(out_res, data, queries);
+		run_experiment_patrician(out_res, data, queries);
 		
 		
 		filename[18]++;
@@ -295,10 +303,10 @@ int main()
 	
 	//test_automata();
 
-	//run_experiment();
+	run_experiment();
 	
 	//testtest();
 	
-	test_suffix2();
+	//test_suffix2();
 	return 0;
 }

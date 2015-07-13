@@ -16,6 +16,7 @@ class Suffix2 {
 
 	public:
 		Suffix2(char *t);
+		~Suffix2();
 		void print();
 		list<int> find_occ(char* pattern);
 		list<int> find_whole_occ(char* pattern);

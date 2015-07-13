@@ -29,7 +29,7 @@ class Node_ST2 {
 
 struct R_Value {
 	Node_ST2* node;
-	char* cad;
+	
 	int pos;
 	int len;
 };

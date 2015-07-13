@@ -1,0 +1,12 @@
+-,SuffixTrie,-,Automata,-,PatricianTrie,-
+Test No,Build,Consult,Build,Consult,Build,Consult
+../books/data/data0.in,6.834,209.494
+0.000,740.037,0.454,62.868
+../books/data/data1.in,7.432,218.622
+0.000,763.858,0.452,64.025
+../books/data/data2.in,7.524,247.916
+0.000,816.265,0.445,66.401
+../books/data/data3.in,7.695,216.969
+0.000,781.831,0.463,60.410
+../books/data/data4.in,8.080,254.508
+0.000,818.399,0.442,66.878

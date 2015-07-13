@@ -10,9 +10,13 @@ Suffix2::Suffix2(char *t) {
 	root = new Node_ST2();
 	
 	for (int i = 0; i < text_len; i++){
-		if (i % 1000 == 0) printf("%d\n", i); 
+		//if (i % 1000 == 0) printf("%d\n", i); 
 		insert_string(i);
 	}
+}
+
+Suffix2::~Suffix2(){
+	delete root;
 }
 
 void Suffix2::insert_string(int text_pos) {

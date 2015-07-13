@@ -8,6 +8,9 @@ Node_ST2::Node_ST2(){
 
 Node_ST2::~Node_ST2(){
 
+	for (map<char, R_Value>::iterator it = children.begin(); it != children.end(); it++){
+		delete it->second.node;
+	}
 }
 
 void Node_ST2::set_position(int pos) {
@@ -31,8 +34,7 @@ R_Value Node_ST2::insert_c(char c) {
 		return it->second;
 	R_Value rvalue;
 	rvalue.node = new Node_ST2();
-	rvalue.cad = new char[1];
-	rvalue.cad[0] = '\0';
+	
 	
 	children.insert(pair<char, R_Value>(c, rvalue));
 	return rvalue;
