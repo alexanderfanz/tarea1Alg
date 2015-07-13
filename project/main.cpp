@@ -25,14 +25,17 @@ void test_suffixtrie() {
 
 
 void test_suffix2() {
-	char cad[] = "mississippi";
+	char cad[] = "missississippi";
 	//char cad[] = "aab";
 	
 	ns_suffix2::Suffix2 st(cad);
 
 	st.print();
 	
-	
+	list<int> r = st.find_occ("i");
+	//r.sort();
+	for (list<int>::iterator it = r.begin(); it != r.end(); it++)
+		printf("%d\n", *it);
 }
 
 
@@ -116,6 +119,31 @@ void run_experiment_automata(FILE *out_res, char *data, list<char*> *queries){
 }
 
 void run_experiment_suffix2(FILE *out_res, char *data, list<char*> *queries){
+	int count = 0;
+	
+	_begin = clock();
+	
+	printf("filling the suffix2 ....\n");
+	ns_suffix2::Suffix2 st(data);
+	
+	_end = clock();
+	fprintf(out_res, "%.3f,", double(_end - _begin) / CLOCKS_PER_SEC);
+	
+	_begin = clock();
+	printf("consulting the suffix2....\n");
+	
+	/*for (std::list<char*>::iterator it = queries->begin(); it != queries->end(); it++, count++){
+		if (count % 1000 == 0) printf("%d\n", count);
+		
+		pt->find_occ(*it); 
+	}
+		*/
+	_end = clock();
+	fprintf(out_res, "%.3f\n", double(_end - _begin) / CLOCKS_PER_SEC);
+	
+}
+
+void run_experiment_suffix__2(FILE *out_res, char *data, list<char*> *queries){
 	int count = 0;
 	
 	_begin = clock();

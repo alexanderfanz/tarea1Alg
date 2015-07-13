@@ -10,14 +10,8 @@ Suffix2::Suffix2(char *t) {
 	root = new Node_ST2();
 	
 	for (int i = 0; i < text_len; i++){
-		printf("inserting:   ");
-		int j = i;
-		while (j < text_len) printf("%c", text[j++]);
-		printf("\n");
+		if (i % 1000 == 0) printf("%d\n", i); 
 		insert_string(i);
-		print();
-		printf("-----------------------------\n");
-		printf("-----------------------------\n");
 	}
 }
 
@@ -27,10 +21,8 @@ void Suffix2::insert_string(int text_pos) {
 	int pos = match_pattern(text_pos, ptr);
 	int len = text_len - text_pos;
 	
-	printf("pos from match   %d\n", pos);
 	if (pos < len) {
 		
-		printf("pos from match   %d\n", pos);
 		
 		map<char, R_Value>::iterator it = ptr->children.find(text[text_pos + pos]);
 		
@@ -54,7 +46,6 @@ void Suffix2::insert_string(int text_pos) {
 				flag = text[text_pos + pos++] == text[it->second.pos + i++]; 
 			}
 			
-			printf("*p %d *i %d   %d\n", pos, i, flag);
 			if (flag) {
 				
 				Node_ST2* new_node = new Node_ST2();
@@ -111,7 +102,7 @@ void Suffix2::insert_string(int text_pos) {
 				rvalue2.len = text_len - text_pos - pos - 1; 
 				ptr = rvalue2.node = new Node_ST2();
 				
-				printf("^^^  p %d   l %d   text+pos %d\n", rvalue2.pos, rvalue2.len, text_pos + pos);
+				
 				
 				new_node->children.insert(pair<char, R_Value>(text[text_pos + pos], rvalue2));
 			}
@@ -154,6 +145,39 @@ int Suffix2::match_pattern(int text_pos, Node_ST2* &ptr) {
 	return pos;
 }
 
+int Suffix2::match_pattern(char *pattern, Node_ST2* &ptr) {
+	
+	ptr = root;
+	int pos = 0;
+	int len = strlen(pattern);
+	
+	while (pos < len) {
+		map<char, R_Value>::iterator it = ptr->children.find(pattern[pos]);
+		
+		if (it == ptr->children.end()) // end of the match
+			return pos;
+			  
+		if (it->second.len > len - pos - 1) // the match can't reach the next node
+			return pos;	
+		
+		pos++;
+			
+		int i = 0;
+		bool flag = true;
+		
+		while (pattern[pos + i] != '\0' && it->second.len > i && flag) {
+			flag = pattern[pos + i] == text[it->second.pos + i++]; 
+		}
+		
+		if (!flag)
+			return pos - 1;
+		pos += i; 
+		ptr = it->second.node;
+	}
+	
+	return pos;
+}
+
 void Suffix2::print()
 {
 	char* cad = new char[100];
@@ -173,7 +197,6 @@ void Suffix2::print(Node_ST2* ptr, char* cad, int pos)
 		for (map<char, R_Value>::iterator it = ptr->children.begin(); it != ptr->children.end(); it++) {
 			cad[pos] = it->first;
 			int new_pos = pos + 1;
-			printf("pos %d    len %d    %d\n", it->second.pos, it->second.len, ptr->children.size());
 			for (int i = 0; i < it->second.len; i++) 
 				cad[new_pos++] = text[it->second.pos + i];
 			print(it->second.node, cad, new_pos);
@@ -185,12 +208,12 @@ void Suffix2::print(Node_ST2* ptr, char* cad, int pos)
 list<int> Suffix2::find_occ(char* pattern) {
 	
 	Node_ST2* ptr;
-	/*
+	
 	int pos = match_pattern(pattern, ptr);
 	int len = strlen(pattern);
 	
 	list<int> result;
-		
+	
 	if (pos < len) {
 		
 		map<char, R_Value>::iterator it = ptr->children.find(pattern[pos]);
@@ -205,10 +228,12 @@ list<int> Suffix2::find_occ(char* pattern) {
 			int i = 0;
 			bool flag = true;
 			
-			while (pattern[pos] != '\0' && it->second.cad[i] != '\0' && flag) {
-				flag = pattern[pos++] == it->second.cad[i++]; 
+			//while (pattern[pos] != '\0' && it->second.cad[i] != '\0' && flag) {
+			//	flag = pattern[pos++] == it->second.cad[i++]; 
+			//}
+			while (pattern[pos] != '\0' && it->second.len > i && flag) {
+				flag = pattern[pos++] == text[it->second.pos + i++]; 
 			}
-			
 			
 			if (flag) {
 				
@@ -231,16 +256,16 @@ list<int> Suffix2::find_occ(char* pattern) {
 		
 		ptr = st->top();
 		st->pop();
-		list<int> tmp = ptr->get_positions();
 		
-		result.insert(result.end(), tmp.begin(), tmp.end());
+		if (ptr->get_position() != -1) 
+			result.push_back(ptr->get_position());
 		
 		for (map<char, R_Value>::iterator it = ptr->children.begin(); it != ptr->children.end(); it++)
 			st->push(it->second.node);
 	}
 	
 	return result;
-	*/
+	
 }
 
 list<int> Suffix2::find_whole_occ(char* pattern) {

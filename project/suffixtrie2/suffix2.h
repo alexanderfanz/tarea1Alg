@@ -25,6 +25,7 @@ class Suffix2 {
 		char* text;
 		int text_len;
 		int match_pattern(int text_pos, Node_ST2* &ptr);
+		int match_pattern(char *pattern, Node_ST2* &ptr);
 		void insert_string(int text_pos);
 		
 		void print(Node_ST2* ptr, char* cad, int pos);	
